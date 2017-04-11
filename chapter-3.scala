@@ -31,3 +31,10 @@
     case Cons(h, t) if f(h) => dropWhile(t, f)
     case _ => elems
   }
+
+  // Exercise 3.6 - Remember the accumulator pattern from Martin Oedersky's course in Coursera!!
+  def init[A](elems: List[A], acc: List[A]): List[A] = elems match {
+    case Nil => Nil
+    case Cons(h, Nil) => elems // holy shit!! we did not yet hit reverse!!!
+    case Cons(h, t) => init(t, acc += h)
+  }
