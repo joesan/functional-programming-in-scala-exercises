@@ -25,3 +25,9 @@
     case Cons(_, _) if n <= 0 => elems
     case Cons(_, tail) => drop(tail, n - 1) 
   }
+
+  // Exercise 3.5
+  def dropWhile[A](elems: List[A], f: A => Boolean): List[A] = elems match {
+    case Cons(h, t) if f(h) => dropWhile(t, f)
+    case _ => elems
+  }
