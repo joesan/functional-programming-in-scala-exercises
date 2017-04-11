@@ -8,4 +8,20 @@
   }
     
   // Exercise 3.2
-  
+  def tail[A](elems: List[A]): List[A] = elems match {
+    case Nil => Nil
+    case Cons(_, remaining) => remaining
+  }
+
+  // Exercise 3.3
+  def setHead[A](elems: List[A], elem: A): List[A] = elems match {
+    case Nil => Nil
+    case Cons(_, tail) => Cons(elem, tail)
+  }
+
+  // Exercise 3.4
+  def drop[A](elems: List[A], n: Int): List[A] = elems match {
+    case Nil => Nil
+    case Cons(_, _) if n <= 0 => elems
+    case Cons(_, tail) => drop(tail, n - 1) 
+  }
