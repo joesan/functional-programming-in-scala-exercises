@@ -13,3 +13,9 @@
     case Some(a) => a
     case None    => default
   }
+
+  // Exercise 4.2
+  def variance(xs: Seq[Double]): Option[Double] = {
+    val mean = mean(xs)
+    mean.flatMap(elem => mean(elem.map(x => math.pow(x - mean, 2))))
+  }
