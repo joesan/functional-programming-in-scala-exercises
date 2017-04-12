@@ -124,9 +124,12 @@
 
   // Exercise 3.22
   def addLists(x: List[Int], y: List[Int]): List[Int] = (x, y) match {
-    case (Nil, elems) => elems
-    case (elems, Nil) => elems
-    case (Cons(xHead, xTail), Cons(yHead, yTail)) => Cons(xHead + yHead, addLists(x, y))
+    case (Nil, elems) => 
+      elems
+    case (elems, Nil) => 
+      elems
+    case (Cons(xHead, xTail), Cons(yHead, yTail)) => 
+      Cons(xHead + yHead, addLists(xTail, yTail))
   }
 
   // Exercise 3.25
