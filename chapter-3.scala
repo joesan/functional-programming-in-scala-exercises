@@ -38,3 +38,8 @@
     case Cons(h, Nil) => elems // holy shit!! we did not yet hit reverse!!!
     case Cons(h, t) => init(t, acc += h)
   }
+
+  // Exercise 3.9
+  def length[A](as: List[A]): Int = {
+    foldRight(as, 0)((_, acc) => acc + 1)
+  }
