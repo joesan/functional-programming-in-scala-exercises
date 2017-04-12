@@ -117,6 +117,11 @@
       f(acc) ++ listOfB
   })
 
+  // Exercise 3.21
+  def filterUsingFlatMap[A](elems: List[A])(f: A => Boolean): List[A] = {
+    flatMap(elems)(a => if (f(a)) List(a) else Nil)
+  }
+
   // Exercise 3.22
   def addLists(x: List[Int], y: List[Int]): List[Int] = (x, y) match {
     case (Nil, elems) => elems
