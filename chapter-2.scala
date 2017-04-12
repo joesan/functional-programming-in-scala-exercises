@@ -5,9 +5,9 @@
     def check(next: Array[A]): Boolean = next.length match {
       case a if a == 0 || a == 1 =>
         true
-      case x if x == 2 =>
+      case b if b == 2 =>
         ordered(next(0), next(1))
-      case d if ordered(next(0), next(1)) =>
+      case c if ordered(next(0), next(1)) =>
         check(next.drop(1))
       case _ =>
         false
