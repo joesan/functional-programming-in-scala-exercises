@@ -60,3 +60,38 @@
   def reverse[A](elems: List[A]): List[A] = {
     foldLeft(elems, List.empty[A])((acc, h) => Cons(h, acc))
   }
+
+  // Exercise 3.16
+  def transformByAdding(elems: List[Int])(toAdd: Int): List[Int] = {
+    foldLeft(elems, List.empty[Int])((acc, head) => Cons(head + toAdd, acc))
+  }
+
+  // Exercise 3.17
+  def doubleToString(elems: List[Double]): List[String] = {
+    foldLeft(elems, List.empty[Double])((acc, head) => Cons(head.toString, acc))
+  }
+
+  // Exercise 3.18
+  def map[A, B](elems: List[A])(f: A => B): List[B] = {
+    
+    @scala.annotation.tailrec
+    def tailRecMap(elems: List[A], acc: List[B]): List[B] = elems match {
+      case Nil => acc
+      case Cons(head, tail) => tailRecMap(tail, Cons(f(head), acc))
+    }
+    
+    tailRecMap(elems, List.empty[B])
+  }
+
+  // Exercise 3.19
+  def filter[A](elems: List[A])(f: A => Boolean): List[A] = {
+
+    @scala.annotation.tailrec
+    def tailRecFilter(elems: List[A], acc: List[A]): List[A] = elems match {
+      case Nil => acc
+      case Cons(head, tail) if f(head) => tailRecFilter(tail, Cons(head, acc))
+      case Cons(_, tail) => tailRecFilter(tail, acc)
+    }
+
+    tailRecFilter(elems, List.empty[A])
+  }
