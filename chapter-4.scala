@@ -25,3 +25,9 @@
     case (None, _) | (_, None) => None
     case (Some(a), Some(b)) => Some(f(a, b))
   }
+
+  // Exercise 4.4
+  def sequence[A](a: List[Option[A]]): Option[List[A]] = {
+    if (a.contains(None)) None
+    else Some(a.flatten(x => x))
+  }
