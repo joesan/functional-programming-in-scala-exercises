@@ -44,9 +44,19 @@
     foldRight(as, 0)((_, acc) => acc + 1)
   }
 
-  // Exercise 3.10 - A tail recursive foldRight
+  // Exercise 3.10 - A tail recursive foldLeft
   @scala.annotation.tailrec
-  def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B = as match {
+  def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B = as match {
     case Nil => z
-    case Cons(head, tail) => foldRight(tail, f(head, z))(f)
+    case Cons(head, tail) => foldLeft(tail, f(head, z))(f)
+  }
+
+  // Exercise 3.11
+  def sumFoldLeft(elems: List[Int]) = foldLeft(elems, 0)(_ + _)
+  def productFoldLeft(elems: List[Double]) = foldLeft(elems, 1.0)(_ * _)
+  def lengthFoldLeft[A](elems: List[A]): Int = foldLeft(elems, 0)((acc, h) => acc + 1)
+
+  // Exercise 3.12
+  def reverse[A](elems: List[A]): List[A] = {
+    foldLeft(elems, List.empty[A])((acc, h) => Cons(h, acc))
   }
