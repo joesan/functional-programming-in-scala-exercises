@@ -43,3 +43,10 @@
   def length[A](as: List[A]): Int = {
     foldRight(as, 0)((_, acc) => acc + 1)
   }
+
+  // Exercise 3.10 - A tail recursive foldRight
+  @scala.annotation.tailrec
+  def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B = as match {
+    case Nil => z
+    case Cons(head, tail) => foldRight(tail, f(head, z))(f)
+  }
