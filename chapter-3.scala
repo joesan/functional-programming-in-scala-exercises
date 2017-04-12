@@ -61,6 +61,21 @@
     foldLeft(elems, List.empty[A])((acc, h) => Cons(h, acc))
   }
 
+  // Exercise 3.13
+  def foldRightUsingFoldLeft[A, B](elems: List[A], z: B)(f: (A, B) => B): B = {
+    foldLeft(reverse(elems), z)((b, a) => f(a, b))
+  }
+
+  // Exercise 3.14
+  def appendUsingFoldLeft[A](x: List[A], y: List[A]): List[A] = {
+    foldLeft(x, y)(Cons(_,_))
+  }
+
+  // Exercise 3.15
+  def concat[A](elems: List[List[A]]): List[A] = {
+    foldRight(elems, List.empty[A])(append)
+  }
+
   // Exercise 3.16
   def transformByAdding(elems: List[Int])(toAdd: Int): List[Int] = {
     foldLeft(elems, List.empty[Int])((acc, head) => Cons(head + toAdd, acc))
@@ -94,4 +109,41 @@
     }
 
     tailRecFilter(elems, List.empty[A])
+  }
+
+  // Exercise 3.20
+  def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] = 
+    as.foldRight(List.empty[B])((acc, listOfB) => {
+      f(acc) ++ listOfB
+  })
+
+  // Exercise 3.22
+  def addLists(x: List[Int], y: List[Int]): List[Int] = (x, y) match {
+    case (Nil, elems) => elems
+    case (elems, Nil) => elems
+    case (Cons(xHead, xTail), Cons(yHead, yTail)) => Cons(xHead + yHead, addLists(x, y))
+  }
+
+  // Exercise 3.25
+  def size[A](t: Tree[A]): Int = {
+    case Leaf(_) => 1
+    case Branch(left, right) => 1 + size(left) + size(right)
+  }
+
+  // Exercise 3.26
+  def maximum(t: Tree[Int]): Int = t match {
+    case Leaf(value) => value
+    case Branch(left, right) => maximum(left).max(maximum(right))
+  }
+
+  // Exercise 3.27
+  def depth[A](t: Tree[A]): Int = t match {
+    case Leaf(_) => 0
+    case Branch(left, right) => 1 + depth(left).max(depth(right))
+  }
+
+  // Exercise 3.28
+  def map[A, B](t: Tree[A])(f: A => B): Tree[B] = t match {
+    case Leaf(a) => Leaf(f(a))
+    case Branch(left, right) => Branch(map(left)(f), map(right)(f))
   }
