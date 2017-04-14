@@ -18,3 +18,15 @@
     def op(a: Boolean, b: Boolean) = a && b
     val zero = true
   }
+
+  // Exercise 10.2
+  def optionMonoid[A]: Monoid[Option[A]] = new Monoid[Option[A]] {  
+    def op(a1: Option[A], a2: Option[A]) = a1 orElse a2
+    def zero = None
+  }
+
+  // Exercise 10.3
+  def endoMonoid[A]: Monoid[A => A] = new Monoid[A => A] {
+    def op(a1: A => A, a2: A => A) = a1 andThen a2
+    def zero = (a: A) => a
+  }
