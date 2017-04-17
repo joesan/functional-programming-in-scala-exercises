@@ -30,3 +30,8 @@
     def op(a1: A => A, a2: A => A) = a1 andThen a2
     def zero = (a: A) => a
   }
+
+  // Exercise 10.5
+  def foldMap[A, B](as: List[A], m: Monoid[B])(f: A => B): B = {
+    as.foldRight(m.zero)((b, a) => m.op(b, f(a)) 
+  }
