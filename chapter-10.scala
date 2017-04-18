@@ -35,3 +35,21 @@
   def foldMap[A, B](as: List[A], m: Monoid[B])(f: A => B): B = {
     as.foldRight(m.zero)((b, a) => m.op(b, f(a)) 
   }
+                         
+  // Exercise 10.7
+  def foldMapV[A, B](v: IndexedSeq[A], m: Monoid[B])(f: A => B): B {
+   
+    // I could have used the foldMap from Exercise 10.5 as well!!!
+    def fold[A](v: IndexedSeq[A]): B = {
+      as.foldRight(m.zero)((b, a) => m.op(b, f(a))
+    }
+    
+    // split the List in two halves
+    val length = l.length
+    val (firstHalf, secondHalf) = if (l.length % 2 == 0) {
+             (l.take(l.length / 2), l diff l.take(l.length / 2))
+           }
+           else (l.take((length - 1) / 2), l diff l.take((length - 1) / 2))
+    
+    m.op(fold(firstHalf), fold(secondHalf))
+  }
