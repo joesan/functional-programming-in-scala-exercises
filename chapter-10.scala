@@ -45,9 +45,9 @@
     }
     
     // split the List in two halves
-    val length = l.length
-    val (firstHalf, secondHalf) = if (l.length % 2 == 0) {
-             (l.take(l.length / 2), l diff l.take(l.length / 2))
+    val length = v.length
+    val (firstHalf, secondHalf) = if (length % 2 == 0) {
+             (l.take(length / 2), l diff l.take(length / 2))
            }
            else (l.take((length - 1) / 2), l diff l.take((length - 1) / 2))
     
