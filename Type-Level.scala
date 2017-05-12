@@ -41,3 +41,48 @@ scala> three + one == four
 res2: Boolean = true
 
 // so far so good!! Now let's translate this into types instead of values!!
+
+sealed trait PeanoNumType { // Type at the end indicates to the reader that we are dealing with types
+  type plus[That <: PeanoNumType] <: PeanoNumType
+}
+
+sealed trait ZeroType extends PeanoNumType {
+  type plus[That <: PeanoNumType] = That
+}
+
+sealed trait NextType[This <: PeanoNumType] extends PeanoNumType {
+   type plus[That <: PeanoNumType] = NextType[This#plus[That]]
+}
+
+// Let's now write some test cases to see if our types hold up! If we get past the compiler, our test cases pass
+scala> type One = NextType[ZeroType]
+defined type alias One
+
+scala> type Two = NextType[One]
+defined type alias Two
+
+scala> type Three = NextType[Two]
+defined type alias Three
+
+scala> type Four = NextType[Three]
+defined type alias Four
+
+scala> implicitly[ZeroType =:= ZeroType]
+res0: =:=[ZeroType,ZeroType] = <function1>
+
+// I'm making it to explicitly fail so that you know how to use the type systax
+scala> implicitly[ZeroType plus One =:= One] 
+<console>:16: error: not found: type plus
+       implicitly[ZeroType plus One =:= One]
+                           ^
+
+scala> implicitly[ZeroType#plus[One] =:= One]
+res2: =:=[One,One] = <function1>
+
+scala> implicitly[One#plus[Two] =:= Three]
+res3: =:=[NextType[Two],Three] = <function1>
+
+// see, we cannot get past the compiler, so our test case fails!
+scala> implicitly[Two#plus[Three] =:= Four]
+<console>:19: error: Cannot prove that NextType[NextType[Three]] =:= Four.
+       implicitly[Two#plus[Three] =:= Four]
